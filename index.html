@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escala de Plantão Judiciário</title>
+  <meta name="description" content="Gera o anexo da portaria de escala de plantão judiciário a partir de uma planilha. Os dados são processados no navegador." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231f3a5f'/%3E%3Cpath d='M9 9h14M9 15h14M9 21h9' stroke='%23e9c46a' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E" />
+</head>
+<body>
+  <header class="topo">
+    <div class="largura">
+      <p class="sobretitulo">Poder Judiciário · Ferramenta de apoio</p>
+      <h1>Escala de Plantão Judiciário</h1>
+      <p class="subtitulo">Gere o anexo da portaria de plantão a partir de uma planilha, com rodízio de varas e servidores, feriados e pontos facultativos.</p>
+    </div>
+  </header>
+
+  <main class="largura">
+    <p class="privacidade">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3M5 10h14v11H5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      Os arquivos são processados apenas no seu navegador. Nada é enviado ou guardado em servidor.
+    </p>
+
+    <section class="passos">
+      <article class="cartao">
+        <span class="numero">1</span>
+        <h2>Prepare os dados</h2>
+        <p>Baixe o modelo, que já vem com um exemplo fictício, e substitua pelos dados da sua comarca: configuração, varas na ordem do rodízio (com servidores e assessores de cada uma) e datas locais.</p>
+        <button id="baixar-modelo" class="botao secundario" type="button">Baixar modelo (.xlsx)</button>
+        <p class="nota">Já usa o arquivo <code>dados.txt</code> da versão anterior? Ele também é aceito no passo 2.</p>
+      </article>
+
+      <article class="cartao">
+        <span class="numero">2</span>
+        <h2>Envie o arquivo</h2>
+        <label id="area-envio" class="area-envio" tabindex="0">
+          <input id="arquivo" type="file" accept=".xlsx,.txt" hidden />
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0-5 5m5-5 5 5M4 16v4h16v-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <strong>Arraste a planilha aqui</strong>
+          <span>ou clique para escolher (.xlsx ou .txt)</span>
+        </label>
+        <p id="nome-arquivo" class="nota"></p>
+      </article>
+    </section>
+
+    <section id="erros" class="erros" hidden>
+      <h2>Corrija os pontos abaixo e envie o arquivo novamente</h2>
+      <ul></ul>
+    </section>
+
+    <section id="resultado" hidden>
+      <div class="cabecalho-resultado">
+        <div>
+          <p id="r-comarca" class="sobretitulo escuro"></p>
+          <h2 id="r-titulo"></h2>
+          <p id="r-periodo" class="periodo"></p>
+        </div>
+        <div class="acoes">
+          <button id="baixar-escala" class="botao" type="button">Baixar escala (.xlsx)</button>
+          <button id="baixar-proximo" class="botao secundario" type="button" title="Mesmos dados, com o próximo servidor de cada vara já marcado">Baixar modelo da próxima escala</button>
+        </div>
+      </div>
+
+      <div id="indicadores" class="indicadores"></div>
+
+      <h3>Distribuição entre as varas</h3>
+      <div class="tabela-rolagem">
+        <table id="tabela-resumo">
+          <thead><tr><th>Vara</th><th class="num">Semana</th><th class="num">Final de semana</th><th class="num">Total</th><th class="num">Dias com observação</th><th>Servidores (plantões)</th><th>Assessores (plantões)</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="titulo-escala">
+        <h3>Escala</h3>
+        <input id="filtro" type="search" placeholder="Filtrar por vara, nome ou data…" aria-label="Filtrar escala" />
+      </div>
+      <div class="tabela-rolagem alta">
+        <table id="tabela-escala">
+          <thead><tr><th>Período</th><th>Tipo</th><th>Vara</th><th>Magistrado(a)</th><th>Servidor(a)</th><th>Assessor(a)</th><th>Observações</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape largura">
+    <p>Semana: segunda a quinta · Final de semana: sexta a domingo · Feriados nacionais e datas móveis calculados automaticamente.</p>
+  </footer>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

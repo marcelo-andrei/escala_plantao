@@ -1,0 +1,10 @@
+node_modules/
+dist/
+dist-arquivo-unico/
+scripts/*.xlsx
+scripts/anexo_python.json
+scripts/dados_teste.txt
+referencia-python/.venv/
+referencia-python/*.xlsx
+referencia-python/dados_proxima_escala.txt
+__pycache__/

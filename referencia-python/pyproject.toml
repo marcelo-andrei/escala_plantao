@@ -1,0 +1,6 @@
+[project]
+name = "escala-plantao-referencia"
+version = "1.0.0"
+description = "Versão em Python (referência) do gerador de escala de plantão judiciário"
+requires-python = ">=3.10"
+dependencies = ["openpyxl>=3.1"]

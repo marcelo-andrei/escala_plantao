@@ -1,0 +1,88 @@
+[PORTARIA]
+XXXXX/2027
+[PASSO]
+3
+[ANO]
+2027
+[DATA INICIAL]
+07/01
+[DATA FINAL]
+19/12
+[VARA INICIAL]
+2ª VARA CÍVEL E EMPRESARIAL
+[VARAS]
+1ª VARA CÍVEL E EMPRESARIAL
+2ª VARA CÍVEL E EMPRESARIAL
+VARA DA FAZENDA PÚBLICA, EXECUÇÃO FISCAL E ACIDENTES DO TRABALHO
+VARA DA INFÂNCIA E JUVENTUDE, INTERDITOS E AUSENTES
+VARA DA FAMÍLIA, SUCESSÕES E REGISTROS PÚBLICOS
+1ª VARA CRIMINAL
+2ª VARA CRIMINAL
+VARA DE VIOLÊNCIA DOMÉSTICA E FAMILIAR CONTRA A MULHER
+VARA DE EXECUÇÃO PENAL
+VARA AGRÁRIA
+1ª VARA DO JUIZADO CÍVEL E CRIMINAL
+2ª VARA DO JUIZADO CÍVEL E CRIMINAL
+VARA DO JUIZ DE GARANTIAS
+[MAGISTRADOS]
+Juliano Mizuma Andrade
+Andrea Aparecida de Almeida Lopes_a
+Aline Cristina Breia Martins_a
+Renata Guerreiro Milhomem de Souza_a
+Priscila Mamede Mousinho_a
+Alessandra Rocha da Silva Souza_a
+Marcelo Andrei Simão Santos
+Alexandre Hiroshi Arakaki
+Caio Marco Berardo
+Edivaldo Beckman Saldanha Sousa
+Adriana Divina da Costa Tristão_a
+Aidison Campos Sousa
+Juliano Mizuma Andrade
+[TELEFONES]
+(94) 98413-8194
+(91) 98010-0754
+(91) 98010-1266
+(91) 98010-1063
+(91) 98950-0124
+(91) 98010-1231
+(91) 98010-0929
+(91) 99379-9574
+(91) 98010-0893
+(91) 98010-0743
+(91) 98010-0911
+(94) 99127-8574
+(91) 98950-0124
+[SERVIDORES]
+Ricarda Graziela Lima Cardoso_a;Servidor Teste Um;Servidora Teste Dois (F)*
+Elizia Honorinda Alvino_a
+Júlio Lima Araújo
+Lucileno Cavalcante;Sheila Regina Abreu de Almeida_a
+Priscila Joyce de Souza Mendonça_a
+Diogo Rafael Diniz Bastos Lima
+Jaconias Medeiros da Silva
+Francisco Alves de Lima
+Rafael Tavares Malato
+Aline Nazareth Raiol de Sousa_a
+Maria Antônia Gama Menezes_a
+Ramon Gabriel Matos Cavalcante
+Jonas Carneiro Alexandre
+[ASSESSORES]
+'Pedro Henrique da Silva Filippin';'Assessora Teste (F)'
+Bruno Loiola Carvalho;Assessor Teste B*;Assessora Teste C_a
+'Rosendo Ramos Júnior'
+'Rafael Alves de Matos'
+'Lucinete Maria da Silva_a'
+'Ivania Strada_a'
+-
+'Antônio Henrique da Mata'
+'Anna Letícia Costa Carvalho_a'
+'João Paulo Portugal de Faria'
+'Ieda Cristina Dias Amorim_a'
+'Raphael Ribeiro Sodré'
+'Débora Zanoni Brito de Souza_a'
+[PONTOS FACULTATIVOS]
+28/05/2027;0
+05/04/2027;0
+06/09/2027;0
+29/11/2027;0
+01/11/2027;0
