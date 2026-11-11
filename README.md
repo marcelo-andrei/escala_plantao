@@ -13,10 +13,11 @@ enviados não saem do computador de quem usa.
      da vara. `(F)` após o nome indica feminino; `*` indica o próximo da vez. Ex.: `João Lima; Maria Souza (F)*`;
    - **Datas locais**: feriados municipais, pontos facultativos e outras datas para as "Observações".
 2. Envia a planilha preenchida (o `dados.txt` da versão antiga também é aceito).
-3. Confere a escala na tela, incluindo a distribuição de plantões entre as varas e entre servidores e assessores.
+3. Confere a escala na tela: distribuição entre varas, servidores e assessores, plantões de cada vara e a escala completa.
 4. Baixa:
    - **a escala** (`.xlsx`), com as abas *Anexo 1*, *Escala (tabela)* e *Resumo por vara*;
-   - **o modelo da próxima escala**, com os mesmos dados e o próximo servidor e assessor de cada vara já marcados.
+   - **os plantões por vara** (`.txt`), lista pronta para enviar às unidades (por exemplo, pelo WhatsApp).
+     Na tela, cada vara também tem um botão **Copiar** com a lista só dela.
 
 Feriados nacionais, Carnaval, Semana Santa, Corpus Christi e datas comemorativas são calculados automaticamente.
 Para a UF `PA` também entram o feriado de 15/08, o Círio, o Recírio e as segundas-feiras facultadas depois deles.

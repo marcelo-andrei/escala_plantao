@@ -1,7 +1,7 @@
 import './estilo.css';
 import { fmt, fmtCurto } from './datas';
 import { lerTxt, lerXlsx, Leitura } from './entrada';
-import { Config, gerarEscala, Plantao, Proximos, resumoPorVara, textoPeriodo, validar } from './escala';
+import { cabecalhoTexto, Config, gerarEscala, Plantao, resumoPorVara, textoPeriodo, textoPorVara, textoVara, validar } from './escala';
 import { configExemplo } from './exemplo';
 import { planilhaEscala, planilhaModelo } from './saida';
 
@@ -19,8 +19,8 @@ const salvarClaude: Promise<Salvar | null> = window.claude
   ? (window.claude.use('downloads') as Promise<Salvar | null>).catch(() => null)
   : Promise.resolve(null);
 
-async function baixar(dados: ArrayBuffer, nome: string) {
-  const blob = new Blob([dados], { type: XLSX_MIME });
+async function baixar(dados: ArrayBuffer | string, nome: string, tipo = XLSX_MIME) {
+  const blob = new Blob([dados], { type: tipo });
   const viaClaude = await salvarClaude;
   if (viaClaude) {
     try {
@@ -59,7 +59,7 @@ async function ocupado<T>(botao: HTMLButtonElement, tarefa: () => Promise<T>) {
 
 // ----------------------------------------------------------------- estado
 
-let atual: { config: Config; escala: Plantao[]; proximo: Proximos } | null = null;
+let atual: { config: Config; escala: Plantao[] } | null = null;
 
 function alertaErros(erros: string[]) {
   const box = $('erros');
@@ -76,8 +76,8 @@ function processar(leitura: Leitura) {
   if (erros.length || !leitura.config) return;
 
   const config = leitura.config;
-  const { escala, proximo } = gerarEscala(config);
-  atual = { config, escala, proximo };
+  const { escala } = gerarEscala(config);
+  atual = { config, escala };
   mostrar(config, escala);
 }
 
@@ -123,6 +123,26 @@ function mostrar(c: Config, escala: Plantao[]) {
       <td>${esc(p.assessor?.nome ?? '—')}</td>
       <td>${obs}</td>
     </tr>`;
+  }).join('');
+
+  $('lista-varas').innerHTML = c.varas.map((v, i) => {
+    const ps = escala.filter((p) => p.vara === v);
+    const itens = ps.map((p) => `
+      <li>
+        <span class="selo ${p.fimDeSemana ? 'fds' : ''}">${p.fimDeSemana ? 'Fim de semana' : 'Semana'}</span>
+        <strong>${textoPeriodo(p).replace('somente dia ', '')}</strong>
+        <small>${esc(p.servidor.nome)}${p.assessor ? ' · ' + esc(p.assessor.nome) : ''}${
+          p.observacoes.length ? ' · ' + p.observacoes.map(([d, n]) => `${fmtCurto(d)} ${esc(n)}`).join('; ') : ''}</small>
+      </li>`).join('');
+    return `
+      <article class="vara">
+        <header>
+          <h4>${esc(v.nome)}</h4>
+          <button type="button" class="botao-copiar" data-vara="${i}">Copiar</button>
+        </header>
+        <p class="vara-info">${v.magistrado.feminino ? 'Juíza' : 'Juiz'} ${esc(v.magistrado.nome)} · ${ps.length} plantões</p>
+        <ul>${itens || '<li>Sem plantão no período.</li>'}</ul>
+      </article>`;
   }).join('');
 
   ($('filtro') as HTMLInputElement).value = '';
@@ -176,11 +196,27 @@ $('baixar-escala').addEventListener('click', (e) => {
     baixar(await planilhaEscala(config, escala), `Plantao Judiciario ${config.inicio!.getUTCFullYear()} - Anexo 1.xlsx`));
 });
 
-$('baixar-proximo').addEventListener('click', (e) => {
+$('baixar-texto').addEventListener('click', (e) => {
   if (!atual) return;
-  const { config, proximo } = atual;
+  const { config, escala } = atual;
   ocupado(e.currentTarget as HTMLButtonElement, async () =>
-    baixar(await planilhaModelo(config, proximo), `Dados - proxima escala - ${config.comarca}.xlsx`.replace(/[\\/:*?"<>|]/g, '')));
+    baixar(textoPorVara(config, escala), `Plantao por vara - ${config.inicio!.getUTCFullYear()}.txt`, 'text/plain;charset=utf-8'));
+});
+
+// Copiar o texto de uma vara (para colar no WhatsApp)
+$('lista-varas').addEventListener('click', async (e) => {
+  const botao = (e.target as HTMLElement).closest('button[data-vara]') as HTMLButtonElement | null;
+  if (!botao || !atual) return;
+  const vara = atual.config.varas[Number(botao.dataset.vara)];
+  const texto = cabecalhoTexto(atual.config) + '\n\n' + textoVara(vara, atual.escala);
+  const original = botao.textContent;
+  try {
+    await navigator.clipboard.writeText(texto);
+    botao.textContent = 'Copiado ✓';
+  } catch {
+    botao.textContent = 'Não foi possível copiar';
+  }
+  setTimeout(() => (botao.textContent = original), 1800);
 });
 
 $('filtro').addEventListener('input', (e) => {

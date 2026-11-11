@@ -209,3 +209,33 @@ export function resumoPorVara(c: Config, escala: Plantao[]): ResumoVara[] {
     };
   });
 }
+
+// ------------------------------------------------- lista de plantões por vara
+
+/** Texto de uma vara, pronto para colar no WhatsApp (*negrito* com asteriscos). */
+export function textoVara(vara: Vara, escala: Plantao[]): string {
+  const ps = escala.filter((p) => p.vara === vara);
+  const linhas = [`*${vara.nome}*`];
+  if (!ps.length) linhas.push('Sem plantão no período.');
+  for (const p of ps) {
+    linhas.push(`• ${textoPeriodo(p).replace(/^./, (l) => l.toUpperCase())} (${tipoPeriodo(p)})`);
+    linhas.push(`   ${p.servidor.feminino ? 'Servidora' : 'Servidor'}: ${p.servidor.nome}`);
+    if (p.assessor) linhas.push(`   ${p.assessor.feminino ? 'Assessora' : 'Assessor'}: ${p.assessor.nome}`);
+    if (p.observacoes.length)
+      linhas.push(`   Obs.: ${p.observacoes.map(([d, n]) => `${fmtCurto(d)} - ${n}`).join('; ')}`);
+  }
+  return linhas.join('\n');
+}
+
+export function cabecalhoTexto(c: Config): string {
+  return [
+    `*ESCALA DE PLANTÃO JUDICIÁRIO - PORTARIA Nº ${c.portaria}*`,
+    c.comarca,
+    `Período: de ${fmt(c.inicio!)} a ${fmt(c.fim!)}`,
+  ].join('\n');
+}
+
+/** Arquivo de texto completo: cabeçalho e os plantões de cada vara. */
+export function textoPorVara(c: Config, escala: Plantao[]): string {
+  return [cabecalhoTexto(c), ...c.varas.map((v) => textoVara(v, escala))].join('\n\n') + '\n';
+}
